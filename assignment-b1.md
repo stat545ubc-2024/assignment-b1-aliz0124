@@ -14,7 +14,23 @@ in a vector. There are options to choose between methods, and set custom
 thresholds or quantile calculation algorithm if needed.
 
 ``` r
-# Making the function -----------------------------------------------------------------------------------------------------------------
+# Documenting the function ------------------------------------------------------------------------------------------------------------
+
+#' Outlier Detection in Numeric Vectors
+#'
+#' This function checks for outlier values in a numeric vector based on either the Z-score method or the Interquartile Range (IQR) method. It returns a numeric vector containing the detected outliers, or an empty numeric vector with a message if no outliers were found or an error occurred. It provides flexibility in defining thresholds for outliers and the type of algorithm for calculating quartiles.
+#'
+#' @param x A numeric vector. This is the primary input for which outliers will be calculated. NA values are automatically omitted within the function to ensure accurate calculations. Named "x" because it is the standard name for a variable in statistics.
+#' @param method A string specifying the method for detecting outliers. Options are "zscore" for Z-score method or "iqr" for IQR method. Inputted values are case insensitive. Named "method" to clearly indicate the desired approach to determine outliers.
+#' @param zscore_threshold Numeric value equal to or greater than 1. The Z-score threshold (i.e number of standard deviations) above which values are considered outliers. Default is 3. Named "zscore_threshold" to specify the cut off for identifying outliers based on the Z-score method.
+#' @param iqr_threshold Numeric value greater than 0. The multiplier for the IQR to define the bounds for detecting outliers. Default is 1.5. Named "iqr_threshold" to specify the multiplier for identifying outliers based on the IQR method. 
+#' @param quantile_type Numeric integer (1-9). The algorithm used to compute quantiles when calculating the IQR. Default is 7. Please see quantile() documentation from the stats package for details. Named "quantile_type" to refer to the specific quantile algorithm chosen for the quantile() function based on input.
+#'
+#' @return A numeric vector of outlier values. If no outliers are found, it returns a message "No outliers found" and an empty numeric vector.
+#'
+
+
+# Function code  ---------------------------------------------------------------------------------------------------------------------
 
 check_outliers <- function(x, method, zscore_threshold = 3, iqr_threshold = 1.5, quantile_type = 7) {
   
@@ -87,21 +103,6 @@ check_outliers <- function(x, method, zscore_threshold = 3, iqr_threshold = 1.5,
   # Return the outliers in a numeric vector
   return(outliers)
 }
-
-# Documenting the function ------------------------------------------------------------------------------------------------------------
-
-#' Outlier Detection in Numeric Vectors
-#'
-#' This function checks for outlier values in a numeric vector based on either the Z-score method or the Interquartile Range (IQR) method. It returns a numeric vector containing the detected outliers, or an empty numeric vector with a message if no outliers were found or an error occurred. It provides flexibility in defining thresholds for outliers and the type of algorithm for calculating quartiles.
-#'
-#' @param x A numeric vector. This is the primary input for which outliers will be calculated. NA values are automatically omitted within the function to ensure accurate calculations. Named "x" because it is the standard name for a variable in statistics.
-#' @param method A string specifying the method for detecting outliers. Options are "zscore" for Z-score method or "iqr" for IQR method. Inputted values are case insensitive. Named "method" to clearly indicate the desired approach to determine outliers.
-#' @param zscore_threshold Numeric value equal to or greater than 1. The Z-score threshold (i.e number of standard deviations) above which values are considered outliers. Default is 3. Named "zscore_threshold" to specify the cut off for identifying outliers based on the Z-score method.
-#' @param iqr_threshold Numeric value greater than 0. The multiplier for the IQR to define the bounds for detecting outliers. Default is 1.5. Named "iqr_threshold" to specify the multiplier for identifying outliers based on the IQR method. 
-#' @param quantile_type Numeric integer (1-9). The algorithm used to compute quantiles when calculating the IQR. Default is 7. Please see quantile() documentation from the stats package for details. Named "quantile_type" to refer to the specific quantile algorithm chosen for the quantile() function based on input.
-#'
-#' @return A numeric vector of outlier values. If no outliers are found, it returns a message "No outliers found" and an empty numeric vector.
-#'
 ```
 
 ## Exercise 3: Include examples (15 points)
@@ -229,10 +230,9 @@ test_5 <- c(test_5, -800, 1200)
 check_outliers(test_5, "iqr")
 ```
 
-    ##  [1]   91.6465756   -9.1307023   -8.0246237   86.2425652   82.4748194
-    ##  [6]   -1.3603270   -0.2194758   -0.4964043   -1.8732798   83.3916683
-    ## [11]   85.5126849  -13.4147754   87.4299470   -1.5065970   -2.5734392
-    ## [16]   -1.0972816 -800.0000000 1200.0000000
+    ##  [1]    0.1662284   -0.3164230   83.9519510   -0.4635048   83.4945395
+    ##  [6]  -11.5706581   -0.6986280   85.1138894   85.4260969   81.1763117
+    ## [11]   -9.7049123   79.5180239 -800.0000000 1200.0000000
 
 ``` r
 check_outliers(test_5, "zscore")
@@ -333,7 +333,7 @@ test_that("Vector with no NA and no outliers", {
 })
 ```
 
-    ## Test passed 🥳
+    ## Test passed 🥇
 
 ``` r
 # 2) The NAs within the vector should not interfere with the return since they are being omitted, and return 5000 for both methods
@@ -349,7 +349,7 @@ test_that("Vector with NAs and outliers", {
 })
 ```
 
-    ## Test passed 😸
+    ## Test passed 🎉
 
 ``` r
 # 3) These should all return errors as they are not numeric vectors greater than length 0
@@ -368,7 +368,7 @@ test_that("Non-numeric or >0 length vectors", {
 })
 ```
 
-    ## Test passed 😸
+    ## Test passed 🥳
 
 ``` r
 # 4) Test other miscellaneous errors and stops based on input ranges
@@ -405,4 +405,4 @@ test_that("invalid inputs or other messages", {
 })
 ```
 
-    ## Test passed 🥳
+    ## Test passed 😸

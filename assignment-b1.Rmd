@@ -10,7 +10,23 @@ I'm going to create a function that checks a numeric vector for any outlier valu
 
 ```{r}
 
-# Making the function -----------------------------------------------------------------------------------------------------------------
+# Documenting the function ------------------------------------------------------------------------------------------------------------
+
+#' Outlier Detection in Numeric Vectors
+#'
+#' This function checks for outlier values in a numeric vector based on either the Z-score method or the Interquartile Range (IQR) method. It returns a numeric vector containing the detected outliers, or an empty numeric vector with a message if no outliers were found or an error occurred. It provides flexibility in defining thresholds for outliers and the type of algorithm for calculating quartiles.
+#'
+#' @param x A numeric vector. This is the primary input for which outliers will be calculated. NA values are automatically omitted within the function to ensure accurate calculations. Named "x" because it is the standard name for a variable in statistics.
+#' @param method A string specifying the method for detecting outliers. Options are "zscore" for Z-score method or "iqr" for IQR method. Inputted values are case insensitive. Named "method" to clearly indicate the desired approach to determine outliers.
+#' @param zscore_threshold Numeric value equal to or greater than 1. The Z-score threshold (i.e number of standard deviations) above which values are considered outliers. Default is 3. Named "zscore_threshold" to specify the cut off for identifying outliers based on the Z-score method.
+#' @param iqr_threshold Numeric value greater than 0. The multiplier for the IQR to define the bounds for detecting outliers. Default is 1.5. Named "iqr_threshold" to specify the multiplier for identifying outliers based on the IQR method. 
+#' @param quantile_type Numeric integer (1-9). The algorithm used to compute quantiles when calculating the IQR. Default is 7. Please see quantile() documentation from the stats package for details. Named "quantile_type" to refer to the specific quantile algorithm chosen for the quantile() function based on input.
+#'
+#' @return A numeric vector of outlier values. If no outliers are found, it returns a message "No outliers found" and an empty numeric vector.
+#'
+
+
+# Function code  ---------------------------------------------------------------------------------------------------------------------
 
 check_outliers <- function(x, method, zscore_threshold = 3, iqr_threshold = 1.5, quantile_type = 7) {
   
@@ -83,22 +99,6 @@ check_outliers <- function(x, method, zscore_threshold = 3, iqr_threshold = 1.5,
   # Return the outliers in a numeric vector
   return(outliers)
 }
-
-# Documenting the function ------------------------------------------------------------------------------------------------------------
-
-#' Outlier Detection in Numeric Vectors
-#'
-#' This function checks for outlier values in a numeric vector based on either the Z-score method or the Interquartile Range (IQR) method. It returns a numeric vector containing the detected outliers, or an empty numeric vector with a message if no outliers were found or an error occurred. It provides flexibility in defining thresholds for outliers and the type of algorithm for calculating quartiles.
-#'
-#' @param x A numeric vector. This is the primary input for which outliers will be calculated. NA values are automatically omitted within the function to ensure accurate calculations. Named "x" because it is the standard name for a variable in statistics.
-#' @param method A string specifying the method for detecting outliers. Options are "zscore" for Z-score method or "iqr" for IQR method. Inputted values are case insensitive. Named "method" to clearly indicate the desired approach to determine outliers.
-#' @param zscore_threshold Numeric value equal to or greater than 1. The Z-score threshold (i.e number of standard deviations) above which values are considered outliers. Default is 3. Named "zscore_threshold" to specify the cut off for identifying outliers based on the Z-score method.
-#' @param iqr_threshold Numeric value greater than 0. The multiplier for the IQR to define the bounds for detecting outliers. Default is 1.5. Named "iqr_threshold" to specify the multiplier for identifying outliers based on the IQR method. 
-#' @param quantile_type Numeric integer (1-9). The algorithm used to compute quantiles when calculating the IQR. Default is 7. Please see quantile() documentation from the stats package for details. Named "quantile_type" to refer to the specific quantile algorithm chosen for the quantile() function based on input.
-#'
-#' @return A numeric vector of outlier values. If no outliers are found, it returns a message "No outliers found" and an empty numeric vector.
-#'
-
 
 
 ```
